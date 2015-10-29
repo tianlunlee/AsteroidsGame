@@ -1,17 +1,28 @@
 //your variable declarations here
+SpaceShip ender = new SpaceShip();
+
+
 public void setup() 
 {
   //your code here
+  size(900, 900);
+  
+
 }
 public void draw() 
 {
   //your code here
+  background(0);
+  ender.show();
+  ender.keyPressed();
 }
 class SpaceShip extends Floater  
 {   
     //your code here
     SpaceShip() {
       corners = 6;
+      xCorners = new int[6];
+      yCorners = new int[6];
       xCorners[0] = 6;
       yCorners[0] = 0; 
       xCorners[1] = -6;
@@ -26,23 +37,23 @@ class SpaceShip extends Floater
       yCorners[5] = 6; 
 
       myColor = (255);
-      myCenterX = 0;
-      myCenterY = 0;
-      myDirectionX = 0;
-      myDirectionY = 0;
-      myPointDirection = 0;
+      myCenterX = 450.00;
+      myCenterY = 450.00;
+      myDirectionX = 0.00;
+      myDirectionY = 0.00;
+      myPointDirection = 0.00;
     }
       
-      public void setX(double x) {myCenterX = x;}
-      public double getX() { return myCenterX;}
-      public void setY(double y) {myCenterY = y;}
-      public double getY() {return myCenterY;}
+      public void setX(int x) {myCenterX = x;}
+      public int getX() { return (int)myCenterX;}
+      public void setY(int y) {myCenterY = y;}
+      public int getY() {return (int)myCenterY;}
       public void setDirectionX(double x) {myDirectionX = x;}
       public double getDirectionX() {return myDirectionX;}
       public void setDirectionY(double y) {myDirectionY = y;}
       public double getDirectionY() {return myDirectionY;}
       public void setPointDirection(int degrees) {myPointDirection = degrees;}
-      public int getPointDirection() {return myPointDirection;}
+      public double getPointDirection() {return myPointDirection;}
 
 
 
@@ -82,7 +93,25 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //rotates the floater by a given number of degrees    
     myPointDirection+=nDegreesOfRotation;   
   }   
-  public void move ()   //move the floater in the current direction of travel
+  public void keyPressed()
+  {
+    if(keyPressed == true)
+      {
+        if (keyCode == UP) {
+          
+        }
+        if (keyCode == RIGHT) {
+            myPointDirection++;
+          }
+        else if (keyCode == LEFT) {
+            myPointDirection--;
+          }
+    }
+  }
+
+//move the floater in the current direction of travel
+  public void move ()
+
   {      
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
