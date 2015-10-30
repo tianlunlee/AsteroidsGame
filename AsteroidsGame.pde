@@ -1,5 +1,6 @@
 //your variable declarations here
 SpaceShip ender = new SpaceShip();
+float speed = 0.0;
 
 
 public void setup() 
@@ -15,6 +16,8 @@ public void draw()
   background(0);
   ender.show();
   ender.keyPressed();
+  ender.move();
+  ender.accelerate(speed);
 }
 class SpaceShip extends Floater  
 {   
@@ -95,11 +98,16 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
   public void keyPressed()
   {
+    
+    if (keyCode == UP && speed < 10) {
+
+          speed += .01;
+        }
+    else if (keyCode == DOWN && speed >= 0) {
+          speed -= .01;
+    }
     if(keyPressed == true)
       {
-        if (keyCode == UP) {
-          
-        }
         if (keyCode == RIGHT) {
             myPointDirection++;
           }
