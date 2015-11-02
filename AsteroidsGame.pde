@@ -15,7 +15,10 @@ public void draw()
   //your code here
   background(0);
   ender.show();
+
   ender.keyPressed();
+
+  
   ender.move();
   ender.accelerate(speed);
 }
@@ -98,16 +101,22 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
   public void keyPressed()
   {
-    
-    if (keyCode == UP && speed < 10) {
-
-          speed += .01;
-        }
-    else if (keyCode == DOWN && speed >= 0) {
-          speed -= .01;
-    }
+  
     if(keyPressed == true)
       {
+          if (keyCode == 32) {
+            speed = 0;
+            myCenterX = (double)(Math.random()*900);
+            myCenterY = (double)(Math.random()*900);
+          }
+    
+    if (keyCode == UP && speed < 2) {
+
+          speed =.01;
+        }
+    if (keyCode == DOWN && speed >= 0) {
+          speed += -.02;
+    }
         if (keyCode == RIGHT) {
             myPointDirection++;
           }
