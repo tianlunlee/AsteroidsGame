@@ -1,5 +1,6 @@
 //your variable declarations here
 SpaceShip ender = new SpaceShip();
+float acc = 0.0;
 float speed = 0.0;
 
 
@@ -14,9 +15,10 @@ public void draw()
 {
   //your code here
   background(0);
+  ender.keyPressed();
   ender.show();
 
-  ender.keyPressed();
+  
 
   
   ender.move();
@@ -104,7 +106,9 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   
     if(keyPressed == true)
       {
-          if (keyCode == 32) {
+          if (key == 'v' && speed != 0 ) {
+            myDirectionX = 0;
+            myDirectionY = 0;
             speed = 0;
             myCenterX = (double)(Math.random()*900);
             myCenterY = (double)(Math.random()*900);
