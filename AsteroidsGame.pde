@@ -2,13 +2,15 @@
 SpaceShip ender = new SpaceShip();
 float acc = 0.0;
 float speed = 0.0;
-
-
+Star nebula [] = new Star[200];
+boolean moving;
 public void setup() 
 {
   //your code here
   size(900, 900);
-  
+  for (int i = 0; i < nebula.length; i++) {
+    nebula[i] = new Star((float)Math.random()*1000-50, (float)Math.random()*1000-50, (float)Math.random()*5);
+  }
 
 }
 public void draw() 
@@ -17,13 +19,21 @@ public void draw()
   background(0);
   ender.keyPressed();
   ender.show();
-
   
+    for (int i = 0; i < nebula.length; i++) {
+    if (moving == true){
+    nebula[i].move();
+  }
+    nebula[i].show();
+  }
+ 
 
   
   ender.move();
   ender.accelerate(speed);
+
 }
+
 class SpaceShip extends Floater  
 {   
     //your code here
@@ -103,9 +113,10 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   }   
   public void keyPressed()
   {
-  
+
     if(keyPressed == true)
       {
+        
           if (key == 'v' && speed != 0 ) {
             myDirectionX = 0;
             myDirectionY = 0;
@@ -115,6 +126,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
           }
     
     if (keyCode == UP && speed < 2) {
+
 
           speed =.01;
         }
@@ -128,6 +140,12 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
             myPointDirection--;
           }
     }
+     if (myDirectionX != 0 || myDirectionY != 0) {
+      moving = true;
+    }
+    else {
+      moving =false;
+    }
   }
 
 //move the floater in the current direction of travel
@@ -139,6 +157,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     myCenterY += myDirectionY;     
 
     //wrap around screen    
+
     if(myCenterX >width)
     {     
       myCenterX = 0;    
@@ -173,5 +192,31 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     }   
     endShape(CLOSE);  
   }   
+}
+
+public class Star 
+{
+  float sX, sY, sR;
+  Star(float x, float y, float r) {
+    sX = x;
+    sY = y;
+    sR = r;
+   
+  }
+  public void show(){
+    fill(255);
+    ellipse(sX, sY, sR, sR);
+  }
+  public void move(){
+    sX += 1;
+    sY += 1;
+   if (sX > 900) {
+        sX = 0;
+      } 
+   if (sY > 900) {
+        sY = 0;
+      }
+  }
+
 } 
 
