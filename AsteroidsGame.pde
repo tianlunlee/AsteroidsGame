@@ -121,6 +121,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
             myDirectionX = 0;
             myDirectionY = 0;
             speed = 0;
+            myPointDirection = (double)(Math.random()*360);
             myCenterX = (double)(Math.random()*900);
             myCenterY = (double)(Math.random()*900);
           }
