@@ -4,6 +4,7 @@ float acc = 0.0;
 float speed = 0.0;
 Star nebula [] = new Star[200];
 boolean moving;
+boolean big;
 public void setup() 
 {
   //your code here
@@ -21,10 +22,10 @@ public void draw()
   ender.show();
   
     for (int i = 0; i < nebula.length; i++) {
-    if (moving == true){
+ 
     nebula[i].move();
-  }
     nebula[i].show();
+   
   }
  
 
@@ -124,6 +125,18 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
             myPointDirection = (double)(Math.random()*360);
             myCenterX = (double)(Math.random()*900);
             myCenterY = (double)(Math.random()*900);
+            big = false;
+            for (int j = 0; j < 6; j++) {
+            xCorners[j] = xCorners[j]/10;
+            yCorners[j] = yCorners[j]/10;
+          }
+          }
+          if (key == 'b' && !big) {
+      for (int j = 0; j < 6; j++) {
+        xCorners[j] = xCorners[j]*10;
+        yCorners[j] = yCorners[j]*10;
+        big = true;
+    }
           }
     
     if (keyCode == UP && speed < 2) {
