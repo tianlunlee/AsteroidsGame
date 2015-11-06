@@ -18,20 +18,22 @@ public void draw()
 {
   //your code here
   background(0);
-  ender.keyPressed();
-  ender.show();
-  
-    for (int i = 0; i < nebula.length; i++) {
+  for (int i = 0; i < nebula.length; i++) {
  
     nebula[i].move();
     nebula[i].show();
    
   }
+  ender.keyPressed();
+  ender.move();
+  ender.accelerate(speed);
+  ender.show();
+  
+    
  
 
   
-  ender.move();
-  ender.accelerate(speed);
+  
 
 }
 
@@ -118,18 +120,14 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     if(keyPressed == true)
       {
         
-          if (key == 'v' && speed != 0 ) {
+          if (key == 'v' && speed != 0 && !big) {
             myDirectionX = 0;
             myDirectionY = 0;
             speed = 0;
             myPointDirection = (double)(Math.random()*360);
             myCenterX = (double)(Math.random()*900);
             myCenterY = (double)(Math.random()*900);
-            big = false;
-            for (int j = 0; j < 6; j++) {
-            xCorners[j] = xCorners[j]/10;
-            yCorners[j] = yCorners[j]/10;
-          }
+            
           }
           if (key == 'b' && !big) {
       for (int j = 0; j < 6; j++) {
@@ -138,6 +136,13 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
         big = true;
     }
           }
+          if (key == 'n' && big) {
+            for (int j = 0; j < 6; j++) {
+              xCorners[j] = xCorners[j]/10;
+              yCorners[j] = yCorners[j]/10;
+            big = false;
+          }
+        }
     
     if (keyCode == UP && speed < 2) {
 
