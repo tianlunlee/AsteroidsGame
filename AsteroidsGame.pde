@@ -75,11 +75,21 @@ class SpaceShip extends Floater
       public double getDirectionY() {return myDirectionY;}
       public void setPointDirection(int degrees) {myPointDirection = degrees;}
       public double getPointDirection() {return myPointDirection;}
-
-
-
-
 }
+  class Asteroid extends FLoater {
+    protected int velocity;
+    Asteroid(int n) {
+      corners = n;
+      xCorners = new int[n];
+      yCorners = new int[n];
+      xCorners[0] = 
+    }
+
+  }
+
+
+
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
