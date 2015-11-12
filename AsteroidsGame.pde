@@ -76,17 +76,43 @@ class SpaceShip extends Floater
       public void setPointDirection(int degrees) {myPointDirection = degrees;}
       public double getPointDirection() {return myPointDirection;}
 }
-  class Asteroid extends FLoater {
-    protected int velocity;
+
+  class Asteroid extends Floater  
+  {
+    private int velocity;
     Asteroid(int n) {
-      corners = n;
-      xCorners = new int[n];
-      yCorners = new int[n];
-      xCorners[0] = 
+      corners = 5;
+      xCorners = new int[5];
+      yCorners = new int[5];
+      xCorners[0] = 3*n;
+      yCorners[0] = 3*n;
+      xCorners[1] = 4*n;
+      yCorners[1] = 4*n;
+      xCorners[2] = 2*n;
+      yCorners[2] = 2*n;
+      xCorners[3] = 3*n;
+      yCorners[3] = 3*n;
+      xCorners[4] = n;
+      yCorners[4] = n;
+      myColor = (100);
+      
     }
+      public void setX(int x) {myCenterX = x;}
+      public int getX() { return (int)myCenterX;}
+      public void setY(int y) {myCenterY = y;}
+      public int getY() {return (int)myCenterY;}
+      public void setDirectionX(double x) {myDirectionX = x;}
+      public double getDirectionX() {return myDirectionX;}
+      public void setDirectionY(double y) {myDirectionY = y;}
+      public double getDirectionY() {return myDirectionY;}
+      public void setPointDirection(int degrees) {myPointDirection = degrees;}
+      public double getPointDirection() {return myPointDirection;}
 
+      //work on this
+      public show() {
+
+      }
   }
-
 
 
 
