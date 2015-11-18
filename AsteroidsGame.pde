@@ -5,7 +5,7 @@ float speed = 0.0;
 Star nebula [] = new Star[200];
 boolean moving;
 boolean big;
-Asteroid rock = new Asteroid((int)Math.random()*4+1);
+Asteroid rock = new Asteroid(20);
 
 public void setup() 
 {
@@ -76,19 +76,19 @@ class SpaceShip extends Floater
   {
     private int velocity;
     Asteroid(int n) {
-      corners = 5;
+      corners = (int)Math.random()*3+3;
       xCorners = new int[5];
       yCorners = new int[5];
-      xCorners[0] = 3*n;
-      yCorners[0] = 3*n;
-      xCorners[1] = 4*n;
-      yCorners[1] = 4*n;
-      xCorners[2] = 2*n;
-      yCorners[2] = 2*n;
-      xCorners[3] = 3*n;
-      yCorners[3] = 3*n;
-      xCorners[4] = n;
-      yCorners[4] = n;
+      xCorners[0] = n;
+      yCorners[0] = n;
+      xCorners[1] = n - 1;
+      yCorners[1] = n - 1;
+      xCorners[2] = n - 2;
+      yCorners[2] = n + 1;
+      xCorners[3] = n - 1;
+      yCorners[3] = n + 1;
+      xCorners[4] = n + 2;
+      yCorners[4] = n +2;
       myColor = (100);
       
     }
