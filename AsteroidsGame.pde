@@ -14,6 +14,7 @@ public void setup()
   for (int i = 0; i < nebula.length; i++) {
     nebula[i] = new Star((float)Math.random()*1000-50, (float)Math.random()*1000-50, (float)Math.random()*5);
   }
+  
 
 }
 public void draw() 
@@ -28,7 +29,7 @@ public void draw()
   ender.move();
   ender.accelerate(speed);
   ender.show();
-  //rock.move();
+  rock.move();
   rock.show();
 }
 
@@ -77,20 +78,33 @@ class SpaceShip extends Floater
     private int velocity;
     Asteroid(int n) {
       corners = (int)Math.random()*3+3;
-      xCorners = new int[5];
-      yCorners = new int[5];
-      xCorners[0] = n;
-      yCorners[0] = n;
-      xCorners[1] = n - 1;
-      yCorners[1] = n - 1;
-      xCorners[2] = n - 2;
-      yCorners[2] = n + 1;
-      xCorners[3] = n - 1;
-      yCorners[3] = n + 1;
-      xCorners[4] = n + 2;
-      yCorners[4] = n +2;
+      xCorners = new int[9];
+      yCorners = new int[9];
+      xCorners[0] = 5;
+      yCorners[0] = 0;
+      xCorners[1] = 4;
+      yCorners[1] = 2;
+      xCorners[2] = 2;
+      yCorners[2] = 3;
+      xCorners[3] = -2;
+      yCorners[3] = 3;
+      xCorners[4] = -4;
+      yCorners[4] = 2;
+      xCorners[5] = -5;
+      yCorners[5] = 0;
+      xCorners[6] = -4;
+      yCorners[6] = -2;
+      xCorners[7] = -2;
+      yCorners[7] = -3;
+      xCorners[8] = 4;
+      yCorners[8] = -2;
       myColor = (100);
-      
+     
+      myCenterX = 450.00;
+      myCenterY = 450.00;
+      myDirectionX = 0.00;
+      myDirectionY = 0.00;
+      myPointDirection = 0.00;
     }
       public void setX(int x) {myCenterX = x;}
       public int getX() { return (int)myCenterX;}
@@ -130,25 +144,7 @@ class SpaceShip extends Floater
       myCenterY = height;    
     }   
   }   
-
-  public void show ()
-  {  
-   //Draws the floater at the current position            
-    fill(myColor);   
-    stroke(myColor);    
-    //convert degrees to radians for sin and cos         
-    double dRadians = myPointDirection*(Math.PI/180);                 
-    int xRotatedTranslated, yRotatedTranslated;    
-    beginShape();         
-    for(int nI = 0; nI < corners; nI++)    
-    {     
-      //rotate and translate the coordinates of the floater using current direction 
-      xRotatedTranslated = (int)((xCorners[nI]* Math.cos(dRadians)) - (yCorners[nI] * Math.sin(dRadians))+myCenterX);     
-      yRotatedTranslated = (int)((xCorners[nI]* Math.sin(dRadians)) + (yCorners[nI] * Math.cos(dRadians))+myCenterY);      
-      vertex(xRotatedTranslated,yRotatedTranslated);    
-    }   
-    endShape(CLOSE);  
-  }   
+ 
 }
 
 
