@@ -5,16 +5,24 @@ float speed = 0.0;
 Star nebula [] = new Star[200];
 boolean moving;
 boolean big;
-Asteroid rock = new Asteroid(20);
+Asteroid rock [] = new Asteroid[15];
+int n1;
+int n2;
+
 
 public void setup() 
 {
   //your code here
   size(900, 900);
   for (int i = 0; i < nebula.length; i++) {
-    nebula[i] = new Star((float)Math.random()*1000-50, (float)Math.random()*1000-50, (float)Math.random()*5);
+    nebula[i] = new Star((float)(Math.random()*1000)-50, (float)(Math.random()*1000)-50, (float)(Math.random()*5));
   }
-  
+  for (int j = 0; j < rock.length; j++) {
+    n1 = (int)(Math.random()*10)+5;
+    n2 = (int)(Math.random()*12)+3;
+    rock[j] = new Asteroid(n1 , n2);
+
+  }
 
 }
 public void draw() 
@@ -25,12 +33,15 @@ public void draw()
     nebula[i].move();
     nebula[i].show();
   }
+  for (int j = 0; j < rock.length; j++) {
+    rock[j].move();
+    rock[j].show();
+  }
   ender.keyPressed();
   ender.move();
   ender.accelerate(speed);
   ender.show();
-  rock.move();
-  rock.show();
+  
 }
 
 class SpaceShip extends Floater  
@@ -76,32 +87,31 @@ class SpaceShip extends Floater
   class Asteroid extends Floater  
   {
     private int velocity;
-    Asteroid(int n) {
-      corners = (int)Math.random()*3+3;
-      xCorners = new int[9];
-      yCorners = new int[9];
-      xCorners[0] = 5;
+    Asteroid(int s1, int s2) {
+      corners = 6;
+      int m1 = s1;
+      int m2 = s2;
+      xCorners = new int[6];
+      yCorners = new int[6];
+      xCorners[0] = 4*m1-10;
       yCorners[0] = 0;
-      xCorners[1] = 4;
-      yCorners[1] = 2;
-      xCorners[2] = 2;
-      yCorners[2] = 3;
-      xCorners[3] = -2;
-      yCorners[3] = 3;
-      xCorners[4] = -4;
-      yCorners[4] = 2;
-      xCorners[5] = -5;
-      yCorners[5] = 0;
-      xCorners[6] = -4;
-      yCorners[6] = -2;
-      xCorners[7] = -2;
-      yCorners[7] = -3;
-      xCorners[8] = 4;
-      yCorners[8] = -2;
+      xCorners[1] = 2*m2;
+      yCorners[1] = 2*m1;
+      xCorners[2] = -2*m2;
+      yCorners[2] = 2*m1;
+      xCorners[3] = -4*m2+10;
+      yCorners[3] = 0;
+      xCorners[4] = -2*m1;
+      yCorners[4] = -2*m2;
+      xCorners[5] = 2*m1;
+      yCorners[5] = -2*m2;
+
       myColor = (100);
-     
-      myCenterX = 450.00;
-      myCenterY = 450.00;
+
+      
+      myCenterX = (int)(Math.random()*900);
+      myCenterY = (int)(Math.random()*900);
+
       myDirectionX = 0.00;
       myDirectionY = 0.00;
       myPointDirection = 0.00;
@@ -120,7 +130,7 @@ class SpaceShip extends Floater
       //work on this
       public void move ()
   {      
-    myPointDirection+=(int)Math.random()*360;  
+    myPointDirection += (int)(Math.random()*n1/3) - n1/6;  
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;     
