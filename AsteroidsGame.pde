@@ -8,7 +8,7 @@ boolean big;
 Asteroid rock [] = new Asteroid[15];
 int n1;
 int n2;
-
+float aRot;
 
 public void setup() 
 {
@@ -20,8 +20,8 @@ public void setup()
   for (int j = 0; j < rock.length; j++) {
     n1 = (int)(Math.random()*10)+5;
     n2 = (int)(Math.random()*12)+3;
+    aRot = (float)(Math.random()*4) -2;
     rock[j] = new Asteroid(n1 , n2);
-
   }
 
 }
@@ -34,6 +34,7 @@ public void draw()
     nebula[i].show();
   }
   for (int j = 0; j < rock.length; j++) {
+
     rock[j].move();
     rock[j].show();
   }
@@ -130,7 +131,7 @@ class SpaceShip extends Floater
       //work on this
       public void move ()
   {      
-    myPointDirection += (int)(Math.random()*n1/3) - n1/6;  
+    myPointDirection += aRot;
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;     
@@ -259,11 +260,11 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     {     
       myCenterX = 0;    
     }    
-    else if (myCenterX<0)
+    else if (myCenterX < 0)
     {     
       myCenterX = width;    
     }    
-    if(myCenterY >height)
+    if(myCenterY > height)
     {    
       myCenterY = 0;    
     }   
