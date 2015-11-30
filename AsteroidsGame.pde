@@ -5,7 +5,7 @@ float speed = 0.0;
 Star nebula [] = new Star[200];
 boolean moving;
 boolean big;
-Asteroid rock [] = new Asteroid[15];
+ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 int n1;
 int n2;
 float aRot;
@@ -17,11 +17,12 @@ public void setup()
   for (int i = 0; i < nebula.length; i++) {
     nebula[i] = new Star((float)(Math.random()*1000)-50, (float)(Math.random()*1000)-50, (float)(Math.random()*5));
   }
-  for (int j = 0; j < rock.length; j++) {
+  for (int j = 0; j < 15; j++) {
+
     n1 = (int)(Math.random()*10)+5;
     n2 = (int)(Math.random()*12)+3;
     aRot = (float)(Math.random()*4) -2;
-    rock[j] = new Asteroid(n1 , n2);
+    rock.add(Asteroid(n1, n2));
   }
 
 }
@@ -88,10 +89,11 @@ class SpaceShip extends Floater
   class Asteroid extends Floater  
   {
     private int velocity;
-    Asteroid(int s1, int s2) {
+    Asteroid(int s1, int s2, float r) {
       corners = 6;
       int m1 = s1;
       int m2 = s2;
+      aRot = r;
       xCorners = new int[6];
       yCorners = new int[6];
       xCorners[0] = 4*m1-10;
