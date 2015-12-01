@@ -8,7 +8,8 @@ boolean big;
 ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 int n1;
 int n2;
-float aRot;
+int aRot;
+int rot;
 
 public void setup() 
 {
@@ -21,8 +22,11 @@ public void setup()
 
     n1 = (int)(Math.random()*10)+5;
     n2 = (int)(Math.random()*12)+3;
-    aRot = (float)(Math.random()*4) -2;
-    rock.add(Asteroid(n1, n2));
+    
+    Asteroid tempA = new Asteroid(n1, n2);
+    rock.add(tempA);
+
+
   }
 
 }
@@ -34,10 +38,14 @@ public void draw()
     nebula[i].move();
     nebula[i].show();
   }
-  for (int j = 0; j < rock.length; j++) {
 
-    rock[j].move();
-    rock[j].show();
+  for (Asteroid tempRock : rock) {
+    
+    tempRock.move();
+    tempRock.show();
+    tempRock.rotate(aRot);
+    
+    
   }
   ender.keyPressed();
   ender.move();
@@ -89,11 +97,11 @@ class SpaceShip extends Floater
   class Asteroid extends Floater  
   {
     private int velocity;
-    Asteroid(int s1, int s2, float r) {
+    Asteroid(int s1, int s2) {
       corners = 6;
       int m1 = s1;
       int m2 = s2;
-      aRot = r;
+      aRot = (int)(Math.random()*4) -2;
       xCorners = new int[6];
       yCorners = new int[6];
       xCorners[0] = 4*m1-10;
@@ -133,7 +141,7 @@ class SpaceShip extends Floater
       //work on this
       public void move ()
   {      
-    myPointDirection += aRot;
+    
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;     
