@@ -26,8 +26,7 @@ public void setup()
 
 
   }
-
-}
+  }
 public void draw() 
 {
   //your code here
@@ -49,7 +48,9 @@ public void draw()
   ender.move();
   ender.accelerate(speed);
   ender.show();
-  
+  Bullet pew = new Bullet(ender);
+  pew.show();
+
 }
 
 class SpaceShip extends Floater  
@@ -175,6 +176,23 @@ class SpaceShip extends Floater
     }   
   }   
  
+}
+
+
+class Bullet extends Floater 
+{
+  Bullet (Spaceship theShip) {
+    myCenterX = theShip.getX();
+    myCenterY = theShip.getY();
+    myPointDirection = theShip.getPointDirection();
+    double dRadians = myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY();
+  }
+
+  void show() {
+    ellipse(myCenterX, myCenterY, 2, 2);
+  }
 }
 
 
