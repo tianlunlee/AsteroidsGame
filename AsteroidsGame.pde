@@ -8,8 +8,6 @@ boolean big;
 ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 int n1;
 int n2;
-int aRot;
-int rot;
 
 public void setup() 
 {
@@ -43,7 +41,7 @@ public void draw()
     
     tempRock.move();
     tempRock.show();
-    tempRock.rotate(aRot);
+    
     
     
   }
@@ -96,12 +94,13 @@ class SpaceShip extends Floater
 
   class Asteroid extends Floater  
   {
-    private int velocity;
+    private double omega;
+    private double velocity;
     Asteroid(int s1, int s2) {
       corners = 6;
       int m1 = s1;
       int m2 = s2;
-      aRot = (int)(Math.random()*4) -2;
+ 
       xCorners = new int[6];
       yCorners = new int[6];
       xCorners[0] = 4*m1-10;
@@ -122,9 +121,18 @@ class SpaceShip extends Floater
       
       myCenterX = (int)(Math.random()*900);
       myCenterY = (int)(Math.random()*900);
+      omega = (double)(Math.random()*6) -3;
+      if (omega == 0) {
+        if (Math.random()  < .5) {
+          omega = 1.5;
+        }
+        else{
+          omega = -1.5;
+        }
+      }
 
-      myDirectionX = 0.00;
-      myDirectionY = 0.00;
+      myDirectionX = (double)(Math.random()*2) -1;
+      myDirectionY = (double)(Math.random()*2) -1;
       myPointDirection = 0.00;
     }
       public void setX(int x) {myCenterX = x;}
@@ -141,7 +149,8 @@ class SpaceShip extends Floater
       //work on this
       public void move ()
   {      
-    
+
+    myPointDirection += omega;
     //change the x and y coordinates by myDirectionX and myDirectionY       
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;     
