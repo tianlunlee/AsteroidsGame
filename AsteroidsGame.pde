@@ -253,6 +253,14 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
             big = false;
           }
         }
+        if (key == 'g') {
+          for (int j = 0; j < 15 - rock.size(); j++) {
+            n1 = (int)(Math.random()*10)+5;
+            n2 = (int)(Math.random()*12)+3;    
+            Asteroid tempB = new Asteroid(n1, n2);
+            rock.add(tempB);
+  }
+        }
     
     if (keyCode == UP && speed < 2) {
 
