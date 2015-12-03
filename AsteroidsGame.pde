@@ -36,10 +36,14 @@ public void draw()
     nebula[i].show();
   }
 
-  for (Asteroid tempRock : rock) {
+  for (int u = 0; u < rock.size(); u++) {
     
-    tempRock.move();
-    tempRock.show();
+    rock.get(u).move();
+    rock.get(u).show();
+    rock.get(u).setDistance( (int)dist(rock.get(u).getX(), rock.get(u).getY(), ender.getX(), ender.getY() ) );
+    if (rock.get(u).getDistance() < 2*n1 || rock.get(u).getDistance() < 2*n2) {
+      rock.remove(rock.get(u));
+    }
     
     
     
@@ -48,8 +52,9 @@ public void draw()
   ender.move();
   ender.accelerate(speed);
   ender.show();
-  Bullet pew = new Bullet(ender);
-  pew.show();
+
+  //Bullet pew = new Bullet(ender);
+  //pew.show();
 
 }
 
@@ -97,6 +102,7 @@ class SpaceShip extends Floater
   {
     private double omega;
     private double velocity;
+    public int distance;
     Asteroid(int s1, int s2) {
       corners = 6;
       int m1 = s1;
@@ -119,7 +125,6 @@ class SpaceShip extends Floater
 
       myColor = (100);
 
-      
       myCenterX = (int)(Math.random()*900);
       myCenterY = (int)(Math.random()*900);
       omega = (double)(Math.random()*6) -3;
@@ -146,7 +151,8 @@ class SpaceShip extends Floater
       public double getDirectionY() {return myDirectionY;}
       public void setPointDirection(int degrees) {myPointDirection = degrees;}
       public double getPointDirection() {return myPointDirection;}
-
+      public void setDistance(int d) {distance = d;}
+      public int getDistance() {return distance;}
       //work on this
       public void move ()
   {      
@@ -157,6 +163,9 @@ class SpaceShip extends Floater
     myCenterY += myDirectionY;     
 
     //wrap around screen    
+  
+
+
 
     if(myCenterX > width)
     {     
@@ -179,21 +188,6 @@ class SpaceShip extends Floater
 }
 
 
-class Bullet extends Floater 
-{
-  Bullet (Spaceship theShip) {
-    myCenterX = theShip.getX();
-    myCenterY = theShip.getY();
-    myPointDirection = theShip.getPointDirection();
-    double dRadians = myPointDirection*(Math.PI/180);
-    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY();
-  }
-
-  void show() {
-    ellipse(myCenterX, myCenterY, 2, 2);
-  }
-}
 
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
