@@ -1,10 +1,13 @@
+//tasks - make bullets move and make siZe of bullet increase with the ship
+
+
 //your variable declarations here
 SpaceShip ender = new SpaceShip();
 float acc = 0.0;
 float speed = 0.0;
 Star nebula [] = new Star[200];
 boolean moving;
-boolean big;
+boolean big = false;
 ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 int n1;
 int n2;
@@ -41,10 +44,12 @@ public void draw()
     rock.get(u).move();
     rock.get(u).show();
     rock.get(u).setDistance( (int)dist(rock.get(u).getX(), rock.get(u).getY(), ender.getX(), ender.getY() ) );
-    if (rock.get(u).getDistance() < 2*n1 || rock.get(u).getDistance() < 2*n2) {
+    if (big == false && rock.get(u).getDistance() < 20) {
       rock.remove(rock.get(u));
     }
-    
+  else if (big == true  && rock.get(u).getDistance() < 80 ) {
+      rock.remove(rock.get(u));
+    } 
     
     
   }
@@ -53,8 +58,8 @@ public void draw()
   ender.accelerate(speed);
   ender.show();
 
-  //Bullet pew = new Bullet(ender);
-  //pew.show();
+  Bullet pew = new Bullet(ender);
+  pew.show();
 
 }
 
@@ -102,7 +107,7 @@ class SpaceShip extends Floater
   {
     private double omega;
     private double velocity;
-    public int distance;
+    
     Asteroid(int s1, int s2) {
       corners = 6;
       int m1 = s1;
@@ -186,12 +191,38 @@ class SpaceShip extends Floater
   }   
  
 }
+class Bullet extends Floater {
+  Bullet (SpaceShip theShip) {
+    myCenterX = theShip.getX();
+    myCenterY = theShip.getY();
+    double dRadians =myPointDirection*(Math.PI/180);
+    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY();
+  }
+  void show() {
+    fill(120, 255, 150);
+    ellipse((int)myCenterX, (int)myCenterY, 5, 5);
 
+  }
+      public void setX(int x) {myCenterX = x;}
+      public int getX() { return (int)myCenterX;}
+      public void setY(int y) {myCenterY = y;}
+      public int getY() {return (int)myCenterY;}
+      public void setDirectionX(double x) {myDirectionX = x;}
+      public double getDirectionX() {return myDirectionX;}
+      public void setDirectionY(double y) {myDirectionY = y;}
+      public double getDirectionY() {return myDirectionY;}
+      public void setPointDirection(int degrees) {myPointDirection = degrees;}
+      public double getPointDirection() {return myPointDirection;}
+      public void setDistance(int d) {distance = d;}
+      public int getDistance() {return distance;}
+}
 
 
 
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
+  protected int distance;
   protected int corners;  //the number of corners, a triangular floater has 3   
   protected int[] xCorners;   
   protected int[] yCorners;   
