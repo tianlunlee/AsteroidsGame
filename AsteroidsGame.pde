@@ -1,16 +1,19 @@
 //tasks - make bullets move and make siZe of bullet increase with the ship
-
-
+// add bullets to array list when key is pressed, remove the bullet if it exits the screen
+//arrays
+ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
+Star nebula [] = new Star[200];
+ArrayList <Bullet> bolt = new ArrayList <Bullet>();
 //your variable declarations here
 SpaceShip ender = new SpaceShip();
 float acc = 0.0;
 float speed = 0.0;
-Star nebula [] = new Star[200];
 boolean moving;
 boolean big = false;
-ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 int n1;
 int n2;
+
+
 
 public void setup() 
 {
@@ -27,8 +30,8 @@ public void setup()
     Asteroid tempA = new Asteroid(n1, n2);
     rock.add(tempA);
 
-
   }
+pew = new Bullet(ender);
   }
 public void draw() 
 {
@@ -58,8 +61,12 @@ public void draw()
   ender.accelerate(speed);
   ender.show();
 
-  Bullet pew = new Bullet(ender);
-  pew.show();
+  
+   .move();
+   .show();
+
+   
+
 
 }
 
@@ -197,12 +204,39 @@ class Bullet extends Floater {
     myCenterY = theShip.getY();
     double dRadians =myPointDirection*(Math.PI/180);
     myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.cos(dRadians) + theShip.getDirectionY();
+    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY();
   }
-  void show() {
-    fill(120, 255, 150);
+  public void show() {
+    if(!big) {
+      fill(120, 255, 150);
     ellipse((int)myCenterX, (int)myCenterY, 5, 5);
+    }
+    else if (big) {
+      fill (120, 255, 150);
+      ellipse((int)myCenterX, (int)myCenterY, 20, 20);
+    }
 
+  }
+  public void move(){
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;  
+
+      if(myCenterX > width)
+    {     
+      myCenterX = 0;    
+    }    
+    else if (myCenterX < 0)
+    {     
+      myCenterX = width;    
+    }    
+    if(myCenterY > height)
+    {    
+      myCenterY = 0;    
+    }   
+    else if (myCenterY < 0)
+    {     
+      myCenterY = height;    
+    }    
   }
       public void setX(int x) {myCenterX = x;}
       public int getX() { return (int)myCenterX;}
