@@ -1,5 +1,8 @@
 //tasks - make bullets move and make siZe of bullet increase with the ship
 // add bullets to array list when key is pressed, remove the bullet if it exits the screen
+// fix the motion of the bullets
+
+
 //arrays
 ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
 Star nebula [] = new Star[200];
@@ -10,9 +13,10 @@ float acc = 0.0;
 float speed = 0.0;
 boolean moving;
 boolean big = false;
+//variables for projectile coordinates/arguments
 int n1;
 int n2;
-
+int m1;
 
 
 public void setup() 
@@ -31,7 +35,7 @@ public void setup()
     rock.add(tempA);
 
   }
-pew = new Bullet(ender);
+
   }
 public void draw() 
 {
@@ -61,12 +65,18 @@ public void draw()
   ender.accelerate(speed);
   ender.show();
 
-  
-   .move();
-   .show();
-
+  for (int i = 0; i < bolt.size(); i ++) {
+    bolt.get(i).move();
+    bolt.get(i).show();
+  }
    
+   for(int b = 0; b < bolt.size(); b++) {
 
+    if(bolt.get(b).getX() > width || bolt.get(b).getX() < 0 || bolt.get(b).getY() > height || bolt.get(b).getY() < 0)
+    {     
+     bolt.remove(b); 
+    }
+  }
 
 }
 
@@ -175,11 +185,9 @@ class SpaceShip extends Floater
     myCenterY += myDirectionY;     
 
     //wrap around screen    
-  
 
 
-
-    if(myCenterX > width)
+if(myCenterX > width)
     {     
       myCenterX = 0;    
     }    
@@ -194,9 +202,9 @@ class SpaceShip extends Floater
     else if (myCenterY < 0)
     {     
       myCenterY = height;    
-    }   
-  }   
  
+}
+}
 }
 class Bullet extends Floater {
   Bullet (SpaceShip theShip) {
@@ -221,23 +229,13 @@ class Bullet extends Floater {
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;  
 
-      if(myCenterX > width)
-    {     
-      myCenterX = 0;    
-    }    
-    else if (myCenterX < 0)
-    {     
-      myCenterX = width;    
-    }    
-    if(myCenterY > height)
-    {    
-      myCenterY = 0;    
-    }   
-    else if (myCenterY < 0)
-    {     
-      myCenterY = height;    
-    }    
-  }
+
+
+    
+  }  
+      
+        
+  
       public void setX(int x) {myCenterX = x;}
       public int getX() { return (int)myCenterX;}
       public void setY(int y) {myCenterY = y;}
@@ -294,7 +292,10 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 
     if(keyPressed == true)
       {
-        
+        if (key == ' ') {
+          Bullet tempC = new Bullet(ender);
+          bolt.add(tempC);
+        }
           if (key == 'v' && speed != 0 && !big) {
             myDirectionX = 0;
             myDirectionY = 0;
