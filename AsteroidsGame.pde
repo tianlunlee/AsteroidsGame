@@ -1,7 +1,7 @@
 //tasks - make bullets move and make siZe of bullet increase with the ship
 // add bullets to array list when key is pressed, remove the bullet if it exits the screen
 // fix the motion of the bullets
-
+// 
 
 //arrays
 ArrayList <Asteroid> rock = new ArrayList <Asteroid>();
@@ -11,12 +11,11 @@ ArrayList <Bullet> bolt = new ArrayList <Bullet>();
 SpaceShip ender = new SpaceShip();
 float acc = 0.0;
 float speed = 0.0;
-boolean moving;
 boolean big = false;
 //variables for projectile coordinates/arguments
 int n1;
 int n2;
-int m1;
+boolean collision;
 
 
 public void setup() 
@@ -26,7 +25,7 @@ public void setup()
   for (int i = 0; i < nebula.length; i++) {
     nebula[i] = new Star((float)(Math.random()*1000)-50, (float)(Math.random()*1000)-50, (float)(Math.random()*5));
   }
-  for (int j = 0; j < 15; j++) {
+  for (int j = 0; j < 20; j++) {
 
     n1 = (int)(Math.random()*10)+5;
     n2 = (int)(Math.random()*12)+3;
@@ -45,31 +44,44 @@ public void draw()
     nebula[i].move();
     nebula[i].show();
   }
-
+//check collision with ship
   for (int u = 0; u < rock.size(); u++) {
     
     rock.get(u).move();
     rock.get(u).show();
-    rock.get(u).setDistance( (int)dist(rock.get(u).getX(), rock.get(u).getY(), ender.getX(), ender.getY() ) );
-    if (big == false && rock.get(u).getDistance() < 20) {
+    rock.get(u).setDistanceS( (int)dist(rock.get(u).getX(), rock.get(u).getY(), ender.getX(), ender.getY() ) );
+    
+    if (big == false && rock.get(u).getDistanceS() < 25) {
       rock.remove(rock.get(u));
     }
-  else if (big == true  && rock.get(u).getDistance() < 80 ) {
+  else if (big == true  && rock.get(u).getDistanceS() < 80 ) {
       rock.remove(rock.get(u));
     } 
-    
+    for(int v = 0; v < bolt.size(); v++) {
+      rock.get(u).setDistanceB((int)dist(rock.get(u).getX(), rock.get(u).getY(), bolt.get(v).getX(), bolt.get(v).getX() ) );
+      if (big == false && rock.get(u).getDistanceB() < 25) {
+      rock.remove(rock.get(u));
+    }
+  else if (big == true  && rock.get(u).getDistanceB() < 80 ) {
+      rock.remove(rock.get(u));
+    } 
+    }
     
   }
-  ender.keyPressed();
-  ender.move();
-  ender.accelerate(speed);
-  ender.show();
+//check collision with bullets
+
 
   for (int i = 0; i < bolt.size(); i ++) {
     bolt.get(i).move();
     bolt.get(i).show();
   }
-   
+  //ship movement
+  ender.keyPressed();
+  ender.move();
+  ender.accelerate(speed);
+  ender.show();
+
+   //remove bullets if they leave the screen
    for(int b = 0; b < bolt.size(); b++) {
 
     if(bolt.get(b).getX() > width || bolt.get(b).getX() < 0 || bolt.get(b).getY() > height || bolt.get(b).getY() < 0)
@@ -173,8 +185,10 @@ class SpaceShip extends Floater
       public double getDirectionY() {return myDirectionY;}
       public void setPointDirection(int degrees) {myPointDirection = degrees;}
       public double getPointDirection() {return myPointDirection;}
-      public void setDistance(int d) {distance = d;}
-      public int getDistance() {return distance;}
+      public void setDistanceS(int d) {distance = d;}
+      public int getDistanceS() {return distance;}
+      public void setDistanceB(int d) {distance = d;}
+      public int getDistanceB() {return distance;}
       //work on this
       public void move ()
   {      
@@ -210,11 +224,12 @@ class Bullet extends Floater {
   Bullet (SpaceShip theShip) {
     myCenterX = theShip.getX();
     myCenterY = theShip.getY();
-    double dRadians =myPointDirection*(Math.PI/180);
+    double dRadians = theShip.getPointDirection()*(Math.PI/180);
     myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY();
+    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY(); 
   }
   public void show() {
+    noStroke();
     if(!big) {
       fill(120, 255, 150);
     ellipse((int)myCenterX, (int)myCenterY, 5, 5);
@@ -226,16 +241,11 @@ class Bullet extends Floater {
 
   }
   public void move(){
+
     myCenterX += myDirectionX;    
     myCenterY += myDirectionY;  
 
-
-
-    
   }  
-      
-        
-  
       public void setX(int x) {myCenterX = x;}
       public int getX() { return (int)myCenterX;}
       public void setY(int y) {myCenterY = y;}
@@ -295,32 +305,32 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
         if (key == ' ') {
           Bullet tempC = new Bullet(ender);
           bolt.add(tempC);
+
         }
-          if (key == 'v' && speed != 0 && !big) {
-            myDirectionX = 0;
-            myDirectionY = 0;
-            speed = 0;
-            myPointDirection = (double)(Math.random()*360);
-            myCenterX = (double)(Math.random()*900);
-            myCenterY = (double)(Math.random()*900);
-            
+        if (key == 'v' && speed != 0 && !big) {
+          myDirectionX = 0;
+          myDirectionY = 0;
+          speed = 0;
+          myPointDirection = (double)(Math.random()*360);
+          myCenterX = (double)(Math.random()*900);
+          myCenterY = (double)(Math.random()*900);  
           }
-          if (key == 'b' && !big) {
-      for (int j = 0; j < 6; j++) {
-        xCorners[j] = xCorners[j]*10;
-        yCorners[j] = yCorners[j]*10;
-        big = true;
+        if (key == 'b' && !big) {
+          for (int j = 0; j < 6; j++) {
+            xCorners[j] = xCorners[j]*10;
+            yCorners[j] = yCorners[j]*10;
+            big = true;
     }
           }
-          if (key == 'n' && big) {
-            for (int j = 0; j < 6; j++) {
-              xCorners[j] = xCorners[j]/10;
-              yCorners[j] = yCorners[j]/10;
+        if (key == 'n' && big) {
+          for (int j = 0; j < 6; j++) {
+            xCorners[j] = xCorners[j]/10;
+            yCorners[j] = yCorners[j]/10;
             big = false;
           }
         }
         if (key == 'g') {
-          for (int j = 0; j < 15 - rock.size(); j++) {
+          for (int j = 0; j < 20 - rock.size(); j++) {
             n1 = (int)(Math.random()*10)+5;
             n2 = (int)(Math.random()*12)+3;    
             Asteroid tempB = new Asteroid(n1, n2);
@@ -329,26 +339,19 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
         }
     
     if (keyCode == UP && speed < 2) {
-
-
           speed =.01;
         }
     if (keyCode == DOWN && speed >= 0) {
-          speed += -.02;
+          speed = -.01;
     }
-        if (keyCode == RIGHT) {
+    if (keyCode == RIGHT) {
             myPointDirection++;
           }
-        else if (keyCode == LEFT) {
+    if (keyCode == LEFT) {
             myPointDirection--;
           }
     }
-     if (myDirectionX != 0 || myDirectionY != 0) {
-      moving = true;
-    }
-    else {
-      moving =false;
-    }
+     
   }
 
 //move the floater in the current direction of travel
@@ -378,8 +381,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
       myCenterY = height;    
     }   
   }   
-  public void show ()  //Draws the floater at the current position  
-  {             
+  public void show ()  
+  {//Draws the floater at the current position  
     fill(myColor);   
     stroke(myColor);    
     //convert degrees to radians for sin and cos         
