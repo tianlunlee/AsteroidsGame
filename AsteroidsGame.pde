@@ -53,17 +53,21 @@ public void draw()
     
     if (big == false && rock.get(u).getDistanceS() < 25) {
       rock.remove(rock.get(u));
+      break;
     }
   else if (big == true  && rock.get(u).getDistanceS() < 80 ) {
       rock.remove(rock.get(u));
+      break;
     } 
-    for(int v = 0; v < bolt.size(); v++) {
+    for(int v = 0; v < bolt.size() ; v++) {
       rock.get(u).setDistanceB((int)dist(rock.get(u).getX(), rock.get(u).getY(), bolt.get(v).getX(), bolt.get(v).getX() ) );
-      if (big == false && rock.get(u).getDistanceB() < 25) {
+      if (big == false && rock.get(u).getDistanceB() < 30) {
       rock.remove(rock.get(u));
+      break;
     }
   else if (big == true  && rock.get(u).getDistanceB() < 80 ) {
       rock.remove(rock.get(u));
+      break;
     } 
     }
     
@@ -89,7 +93,12 @@ public void draw()
      bolt.remove(b); 
     }
   }
-
+            for (int j = 0; j < 20 - rock.size(); j++) {
+            n1 = (int)(Math.random()*10)+5;
+            n2 = (int)(Math.random()*12)+3;    
+            Asteroid tempB = new Asteroid(n1, n2);
+            rock.add(tempB);
+  }
 }
 
 class SpaceShip extends Floater  
@@ -225,8 +234,8 @@ class Bullet extends Floater {
     myCenterX = theShip.getX();
     myCenterY = theShip.getY();
     double dRadians = theShip.getPointDirection()*(Math.PI/180);
-    myDirectionX = 5 * Math.cos(dRadians) + theShip.getDirectionX();
-    myDirectionY = 5 * Math.sin(dRadians) + theShip.getDirectionY(); 
+    myDirectionX = 10 * Math.cos(dRadians) + theShip.getDirectionX();
+    myDirectionY = 10 * Math.sin(dRadians) + theShip.getDirectionY(); 
   }
   public void show() {
     noStroke();
@@ -289,8 +298,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     //convert the current direction the floater is pointing to radians    
     double dRadians =myPointDirection*(Math.PI/180);     
     //change coordinates of direction of travel    
-    myDirectionX += ((dAmount) * Math.cos(dRadians));    
-    myDirectionY += ((dAmount) * Math.sin(dRadians));       
+    myDirectionX = ((dAmount) * Math.cos(dRadians));    
+    myDirectionY = ((dAmount) * Math.sin(dRadians));       
   }   
   public void rotate (int nDegreesOfRotation)   
   {     
@@ -302,9 +311,13 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 
     if(keyPressed == true)
       {
-        if (key == ' ') {
-          Bullet tempC = new Bullet(ender);
-          bolt.add(tempC);
+        if (key == ' ' ) {
+        
+            Bullet tempC = new Bullet(ender);
+           bolt.add(tempC); 
+      
+     
+          
 
         }
         if (key == 'v' && speed != 0 && !big) {
@@ -329,20 +342,13 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
             big = false;
           }
         }
-        if (key == 'g') {
-          for (int j = 0; j < 20 - rock.size(); j++) {
-            n1 = (int)(Math.random()*10)+5;
-            n2 = (int)(Math.random()*12)+3;    
-            Asteroid tempB = new Asteroid(n1, n2);
-            rock.add(tempB);
-  }
-        }
+
     
     if (keyCode == UP && speed < 2) {
-          speed =.01;
+          speed = 4;
         }
     if (keyCode == DOWN && speed >= 0) {
-          speed = -.01;
+          speed -= 2;
     }
     if (keyCode == RIGHT) {
             myPointDirection++;
