@@ -59,20 +59,21 @@ public void draw()
       rock.remove(rock.get(u));
       break;
     } 
+    //check collisions with bullets
     for(int v = 0; v < bolt.size() ; v++) {
-      rock.get(u).setDistanceB((int)dist(rock.get(u).getX(), rock.get(u).getY(), bolt.get(v).getX(), bolt.get(v).getX() ) );
+      rock.get(u).setDistanceB((int)dist(rock.get(u).getX(), rock.get(u).getY(), bolt.get(v).getX(), bolt.get(v).getY() ) );
       if (big == false && rock.get(u).getDistanceB() < 30) {
       rock.remove(rock.get(u));
       break;
     }
-  else if (big == true  && rock.get(u).getDistanceB() < 80 ) {
+      else if (big == true  && rock.get(u).getDistanceB() < 80 ) {
       rock.remove(rock.get(u));
       break;
     } 
     }
     
   }
-//check collision with bullets
+
 
 
   for (int i = 0; i < bolt.size(); i ++) {
@@ -144,7 +145,6 @@ class SpaceShip extends Floater
   class Asteroid extends Floater  
   {
     private double omega;
-    private double velocity;
     
     Asteroid(int s1, int s2) {
       corners = 6;
@@ -309,17 +309,8 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
   public void keyPressed()
   {
 
-    if(keyPressed == true)
-      {
-        if (key == ' ' ) {
+       
         
-            Bullet tempC = new Bullet(ender);
-           bolt.add(tempC); 
-      
-     
-          
-
-        }
         if (key == 'v' && speed != 0 && !big) {
           myDirectionX = 0;
           myDirectionY = 0;
@@ -356,10 +347,16 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
     if (keyCode == LEFT) {
             myPointDirection--;
           }
-    }
-     
+    if (keyPressed == true) {
+      
+     if (key == ' ' ) {
+        
+            Bullet tempC = new Bullet(ender);
+           bolt.add(tempC); 
+      
+        }
   }
-
+  }
 //move the floater in the current direction of travel
   public void move ()
 
